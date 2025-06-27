@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "+4dGG6CtOFU=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Vlad\\source\\gitrepos\\library-manga\\api\\labrary-manga-api\\labrary-manga-api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Vlad\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "C:\\Users\\Vlad\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
