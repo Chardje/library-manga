@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("labrary-manga-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ed5870c663f88d693448aac3e258ccafd8f24f2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a936933c234b67601223c0af843b2caa3bd681d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("labrary-manga-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("labrary-manga-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
