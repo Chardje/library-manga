@@ -1,2 +1,32 @@
-/api/library-manga-api/bin
-/api/library-manga-api/obj
+api/library-manga-api/bin
+api/library-manga-api/obj
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Node.js / Vite
+front/node_modules/
+front/dist/
+front/.env
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+**/pgdata/
+
+# Others
+.env
+*.db

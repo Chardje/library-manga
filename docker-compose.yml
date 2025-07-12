@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  api:
+    build: ./api/labrary-manga-api
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=library;Username=postgres;Password=postgres
+    depends_on:
+      - db
+  front:
+    build: ./front
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: library
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
