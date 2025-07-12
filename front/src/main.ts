@@ -7,7 +7,7 @@ interface HiModel {
   text: string;
 }
 
-const api = import.meta.env.VITE_API_URL || 'http://localhost:5219';
+const api = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 let names = ["John", "Jane", "Doe", "Alice", "Bob", "Charlie", "Eve", "Mallory", "Trent", "Victor"];
 
 // const response = await fetch(api + "/hi/John", {
