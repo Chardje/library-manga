@@ -1,27 +1,20 @@
 console.log('handlesmalmanga.js loaded');
-import './style.css'
-import type { IMangaTitleShort } from './models/IMangaTitleShort';
-
 const api = 'http://localhost:5000';
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector<HTMLDivElement>('#app')!.innerHTML =
+document.querySelector('#app').innerHTML =
     `
 <h1>Library Manga</h1>
 <button id="random" type="button" onclick="getListManga()">RaNdOm</button>
 <h2 id="greeting"></h2>
-<div id="manga-list"></div>`
-
-  getListManga();
-});
-
+<div id="manga-list"></div>`;
+getListManga();
 function getListManga() {
-  fetch(api + '/MangaList/random')
-    .then(response => response.json())
-    .then(data => {
+    fetch(api + '/MangaList/random')
+        .then(response => response.json())
+        .then(data => {
         const appElem = document.querySelector('#app');
         if (appElem) {
-            let mangaList = data as IMangaTitleShort[];
-          appElem.innerHTML = mangaList.map(manga => `
+            let mangaList = data;
+            appElem.innerHTML = mangaList.map(manga => `
             <div class="manga">
               <h3>${manga.title}</h3>
               <img src="${manga.coverImage}" alt="${manga.title} cover">
@@ -31,4 +24,6 @@ function getListManga() {
           `).join('');
         }
     });
-};
+}
+;
+export {};
