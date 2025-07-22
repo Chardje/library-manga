@@ -11,4 +11,5 @@ public class AppDbContext : DbContext
     public DbSet<Manga> Manga { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Pack> Packs { get; set; }
+    public DbSet<Ratings> Ratings { get; set; }
 }

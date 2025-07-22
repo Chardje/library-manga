@@ -8,11 +8,11 @@ namespace labrary_manga_api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RandomMangaController : ControllerBase
+    public class MangaListController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public RandomMangaController(AppDbContext context)
+        public MangaListController(AppDbContext context)
         {
             _context = context;
         }
@@ -29,6 +29,22 @@ namespace labrary_manga_api.Controllers
                 return NotFound();
             }
             return Ok(new List<MangaTitleShort>(manga.Select(m => new MangaTitleShort(m))));
+        }
+        [HttpGet("popular")]
+        public async Task<ActionResult<List<MangaTitleShort>>> GetPopularManga([FromQuery] int count = 1)
+        {
+            var manga = await _context.Ratings
+                .GroupBy(r => r.MangaId)
+                .OrderByDescending(g => g.Average(r => r.RatingValue))
+                .Take(count)
+                .Select(g => new MangaTitleShort(_context.Manga.Where(m => m.MangaId == g.FirstOrDefault().MangaId).FirstOrDefault()))
+                .ToListAsync();
+
+            if (manga == null || !manga.Any())
+            {
+                return NotFound();
+            }
+            return Ok(manga);
         }
     }
 }
