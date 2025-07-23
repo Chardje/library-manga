@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <script type="module" src="handlesmalmanga.js"></script>
     <div id="app">
         <h1>Welcome to the Manga Library</h1>
         <p>Loading manga titles...</p>
+        <div id="manga-list">
+            <h1>Library Manga</h1>
+      <button id="random" type="button" onclick="getListManga()">random</button>
+      <div id="manga-list"></div>
+        </div>
     </div>
-    <script type="module" src="handlesmalmanga.js"></script>
 </body>
+
 </html>
