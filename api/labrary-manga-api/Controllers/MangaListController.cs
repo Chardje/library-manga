@@ -37,7 +37,7 @@ namespace labrary_manga_api.Controllers
                 .GroupBy(r => r.MangaId)
                 .OrderByDescending(g => g.Average(r => r.RatingValue))
                 .Take(count)
-                .Select(g => new MangaTitleShort(_context.Manga.Where(m => m.MangaId == g.FirstOrDefault().MangaId).FirstOrDefault()))
+                .Select(g => new MangaTitleShort(g.FirstOrDefault().Manga))
                 .ToListAsync();
 
             if (manga == null || !manga.Any())
@@ -45,6 +45,22 @@ namespace labrary_manga_api.Controllers
                 return NotFound();
             }
             return Ok(manga);
+        }
+        [HttpGet("latest")]
+        public async Task<ActionResult<List<MangaTitleShort>>> GetLatestManga([FromQuery] int count = 1)
+        {
+            var manga = await _context.Chapters
+                .GroupBy(m => m.MangaId)
+                .OrderByDescending(m => m.Max(c => c.TimeUpdated))
+                .Select(c => c.FirstOrDefault().Manga)
+                .Take(count)
+                .ToListAsync();
+
+            if (manga == null || !manga.Any())
+            {
+                return NotFound();
+            }
+            return Ok(new List<MangaTitleShort>(manga.Select(m => new MangaTitleShort(m))));
         }
     }
 }
