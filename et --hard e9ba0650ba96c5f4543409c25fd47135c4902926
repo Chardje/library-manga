@@ -1,0 +1,72 @@
+[33mcommit 830e408e70669697631c5b4c9347f73296c45603[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend1[m[33m, [m[1;31morigin/backend1[m[33m)[m
+Merge: b645ffd d8d2bd5
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Wed Jul 30 16:01:53 2025 +0300
+
+    Merge branch 'main' into backend1
+
+[33mcommit b645ffd0aa1cd3f80295daf6284214a1f909c746[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Thu Jul 24 18:50:35 2025 +0300
+
+    write schema.sql
+
+[33mcommit 5fde7836ed4c70f7b8b26710b2c1c349758df918[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Wed Jul 23 19:56:29 2025 +0300
+
+    add lastest mangas
+
+[33mcommit d8d2bd53c9727e4fc861fc069adb5cc438ca03f1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Wed Jul 23 18:31:47 2025 +0300
+
+    mb working front test
+
+[33mcommit eb10efdc60f83b683eba13dda47b360c2b77e463[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Tue Jul 22 20:40:52 2025 +0300
+
+    new front
+
+[33mcommit c972fec8f66d4e2785b7cca33a63c81b0dc7e080[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Tue Jul 22 18:16:34 2025 +0300
+
+    add popular part of controller
+
+[33mcommit e9ba0650ba96c5f4543409c25fd47135c4902926[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Mon Jul 21 22:57:59 2025 +0300
+
+    Add random controler
+
+[33mcommit 5c615c1e6e77ee242af6124f0ad70397ff9d8c22[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Sat Jul 12 22:25:36 2025 +0300
+
+    configurate docker
+
+[33mcommit ae8f43b7d075a61033dda28a1d7a5bcb8a6cac20[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Sat Jul 12 21:45:52 2025 +0300
+
+    add dockerfiles
+
+[33mcommit 03b03ef164eb5d66a23b2eb176aeaaac55d8a6a1[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Mon Jul 7 22:26:38 2025 +0300
+
+    add empty front end (typescript) and conect to api
+
+[33mcommit a936933c234b67601223c0af843b2caa3bd681d2[m
+Author: Vlad Sheiko <sheiko.vlad@gmail.com>
+Date:   Fri Jun 27 18:49:19 2025 +0300
+
+    add api project
+
+[33mcommit 5ed5870c663f88d693448aac3e258ccafd8f24f2[m
+Author: Vlad <73959307+Chardje@users.noreply.github.com>
+Date:   Fri Jun 27 17:31:26 2025 +0300
+
+    Initial commit
