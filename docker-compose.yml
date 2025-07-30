@@ -13,8 +13,9 @@ services:
     build: ./front
     ports:
       - "8080:80"
-    depends_on:
-      - api
+    volumes:
+      - ./front:/app
+      - ./front/dest:/app/dest
   db:
     image: postgres:16
     restart: always

@@ -1,15 +1,18 @@
 {
   "name": "front",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "start": "tsc --watch",
+    "dev": "concurrently \"tsc --watch --preserveWatchOutput\" \"http-server dest -p 8080\""
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "devDependencies": {
-    "typescript": "~5.8.3",
-    "vite": "^7.0.0"
+    "typescript": "^5.8.3",
+    "http-server": "^14.1.1",
+    "concurrently": "^8.2.2"
   }
 }
