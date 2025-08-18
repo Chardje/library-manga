@@ -623,6 +623,65 @@ ALTER TABLE ONLY public.views
     ADD CONSTRAINT views_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
+
+-- Вставка 10 рядків у таблицю authors
+INSERT INTO public.authors (name, bio)
+VALUES
+('Masashi Kishimoto', 'Author of Naruto. Japanese manga artist.'),
+('Eiichiro Oda', 'Author of One Piece. Japanese manga artist.'),
+('Tite Kubo', 'Author of Bleach. Japanese manga artist.'),
+('Hajime Isayama', 'Author of Attack on Titan. Japanese manga artist.'),
+('Tsugumi Ohba', 'Author of Death Note. Japanese manga writer.'),
+('Akira Toriyama', 'Author of Dragon Ball. Japanese manga artist.'),
+('Kohei Horikoshi', 'Author of My Hero Academia. Japanese manga artist.'),
+('Koyoharu Gotouge', 'Author of Demon Slayer. Japanese manga artist.'),
+('Gege Akutami', 'Author of Jujutsu Kaisen. Japanese manga artist.'),
+('Tatsuki Fujimoto', 'Author of Chainsaw Man. Japanese manga artist.');
+--
+-- Вставка 10 рядків у таблицю manga
+INSERT INTO public.manga (title, description, release_date, author_id, pack_id, cover_image, status)
+VALUES
+('Naruto', 'Ninja adventures in Konoha', '2002-10-03', 1, 1, 'image/naruto.png', 'ended'),
+('One Piece', 'Pirate journey for treasure', '1999-10-20', 2, 2, 'image/onepiece.png', 'ongoing'),
+('Bleach', 'Soul reapers and hollows', '2004-10-05', 3, 3, 'image/bleach.png', 'ended'),
+('Attack on Titan', 'Humanity vs Titans', '2013-04-07', 4, 4, 'image/aot.png', 'ended'),
+('Death Note', 'Notebook of death', '2006-10-04', 5, 5, 'image/deathnote.png', 'ended'),
+('Dragon Ball', 'Martial arts and dragons', '1986-02-26', 6, 6, 'image/dragonball.png', 'ended'),
+('My Hero Academia', 'Superpowers in school', '2016-04-03', 7, 7, 'image/mha.png', 'ongoing'),
+('Demon Slayer', 'Demon hunting siblings', '2019-04-06', 8, 8, 'image/demonslayer.png', 'ended'),
+('Jujutsu Kaisen', 'Cursed energy battles', '2020-10-03', 9, 9, 'image/jujutsu.png', 'ongoing'),
+('Chainsaw Man', 'Chainsaw devil hunter', '2022-10-12', 10, 10, 'image/chainsawman.png', 'ongoing');
+
+-- Вставка 10 рядків у таблицю ratings
+INSERT INTO public.ratings (user_id, manga_id, rating)
+VALUES
+(1, 1, 5),
+(2, 2, 4),
+(3, 3, 5),
+(4, 4, 3),
+(5, 5, 5),
+(6, 6, 4),
+(7, 7, 5),
+(8, 8, 4),
+(9, 9, 5),
+(10, 10, 3);
+
+-- Вставка 10 рядків у таблицю chapter
+INSERT INTO public.chapter (manga_id, num)
+VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1);
+
+
+
 --
 -- PostgreSQL database dump complete
 --
