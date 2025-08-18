@@ -624,6 +624,21 @@ ALTER TABLE ONLY public.views
 
 
 
+-- Вставка 10 рядків у таблицю packs
+INSERT INTO public.packs (pack_id, name, description)
+VALUES
+(1, 'Shonen Jump', 'Popular shonen manga pack'),
+(2, 'Grand Line', 'Pirate adventure pack'),
+(3, 'Soul Society', 'Spiritual action pack'),
+(4, 'Titan Pack', 'Survival and action pack'),
+(5, 'Mystery Pack', 'Thriller and mystery manga'),
+(6, 'Martial Arts', 'Classic martial arts stories'),
+(7, 'Hero School', 'Superhero training stories'),
+(8, 'Demon Hunt', 'Dark fantasy and demon hunting'),
+(9, 'Cursed Energy', 'Supernatural battles pack'),
+(10, 'Chainsaw Action', 'Unique action manga');
+
+
 -- Вставка 10 рядків у таблицю authors
 INSERT INTO public.authors (name, bio)
 VALUES
@@ -651,6 +666,20 @@ VALUES
 ('Demon Slayer', 'Demon hunting siblings', '2019-04-06', 8, 8, 'image/demonslayer.png', 'ended'),
 ('Jujutsu Kaisen', 'Cursed energy battles', '2020-10-03', 9, 9, 'image/jujutsu.png', 'ongoing'),
 ('Chainsaw Man', 'Chainsaw devil hunter', '2022-10-12', 10, 10, 'image/chainsawman.png', 'ongoing');
+
+-- Вставка 10 рядків у таблицю users
+INSERT INTO public.users (user_id, username, email, password_hash)
+VALUES
+(1, 'user1', 'user1@example.com', 'hash1'),
+(2, 'user2', 'user2@example.com', 'hash2'),
+(3, 'user3', 'user3@example.com', 'hash3'),
+(4, 'user4', 'user4@example.com', 'hash4'),
+(5, 'user5', 'user5@example.com', 'hash5'),
+(6, 'user6', 'user6@example.com', 'hash6'),
+(7, 'user7', 'user7@example.com', 'hash7'),
+(8, 'user8', 'user8@example.com', 'hash8'),
+(9, 'user9', 'user9@example.com', 'hash9'),
+(10, 'user10', 'user10@example.com', 'hash10');
 
 -- Вставка 10 рядків у таблицю ratings
 INSERT INTO public.ratings (user_id, manga_id, rating)
