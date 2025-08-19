@@ -9,7 +9,15 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
 
-        // Add services to the container.
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
+        });
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddControllers();
 
@@ -32,7 +40,11 @@ internal class Program
                 options.RoutePrefix = string.Empty;
             });
         }
-        app.UseHttpsRedirection();
+
+        app.UseRouting();
+        app.UseCors("AllowAll");
+        app.UseAuthorization();
+        //app.UseHttpsRedirection();
         app.MapControllers();
 
         app.Run();

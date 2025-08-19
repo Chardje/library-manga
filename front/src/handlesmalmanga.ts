@@ -5,7 +5,7 @@ const api = 'http://localhost:5000';
 
 
 function getListManga() {
-  fetch(api + '/RandomManga/random?count=8')
+  fetch(api + '/MangaList/random?count=1')
     .then(response => response.json())
     .then(data => {
       const appElem = document.querySelector('#manga-list');

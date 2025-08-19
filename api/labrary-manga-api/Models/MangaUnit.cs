@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace labrary_manga_api.Models
 {
-    public class MangaTitleShort
+    public class MangaUnit
     {
         public int Id { get; set; }
 
@@ -12,15 +12,15 @@ namespace labrary_manga_api.Models
 
         public string CoverImage { get; set; }
 
-        public int Chapters { get; set; }
+        public List<Chapter> Chapters { get; set; }
 
-        public MangaTitleShort(Manga manga , int chapters = 0)
+        public MangaUnit(Manga manga)
         {
             Id = manga.MangaId;
             Title = manga.Title;
             Status = manga.Status;
             CoverImage = manga.CoverImage;
-            Chapters = manga.Chapters?.Count ?? chapters;
+            Chapters = manga.Chapters ?? new List<Chapter>();
         }
 
     }

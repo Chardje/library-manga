@@ -11,9 +11,7 @@ namespace labrary_manga_api.Models
 
         [ForeignKey("Manga")]
         [Column("manga_id")]
-        public int MangaId { get; set; }
-        
-        public virtual Manga Manga { get; set; }
+        public int MangaId { get; set; }        
 
 
         [Column("num")]

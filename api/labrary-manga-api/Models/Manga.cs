@@ -41,5 +41,7 @@ namespace labrary_manga_api.Models
         public string? CoverImage { get; set; }
         [Column("status")]
         public string Status { get; set; } = "Ended";
+
+        public List<Chapter> Chapters { get; set; }
     }
 }
