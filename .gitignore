@@ -31,3 +31,5 @@ Thumbs.db
 .env
 *.db
 /front1/
+db-init/schemaold.sql
+99.zip

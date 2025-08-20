@@ -10,10 +10,9 @@ namespace labrary_manga_api.Models
         [Column("pack_id")]
         public int PackId { get; set; }
 
-        [Required]
         [MaxLength(100)]
         [Column("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column("description")]
         public string? Description { get; set; }

@@ -1,245 +1,66 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 16.9 (Debian 16.9-1.pgdg120+1)
--- Dumped by pg_dump version 16.9 (Debian 16.9-1.pgdg120+1)
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: admins; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.admins (
-    admin_id integer NOT NULL,
-    username character varying(50) NOT NULL,
-    email character varying(100) NOT NULL,
-    password_hash text NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+-- Types
+CREATE TYPE public.author_role AS ENUM (
+    'author',
+    'artist',
+    'other'
 );
 
+CREATE TYPE public.manga_status AS ENUM (
+    'Онгоїнг',
+    'Завершена'
+);
 
-ALTER TABLE public.admins OWNER TO postgres;
-
---
--- Name: admins_admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.admins_admin_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.admins_admin_id_seq OWNER TO postgres;
-
---
--- Name: admins_admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.admins_admin_id_seq OWNED BY public.admins.admin_id;
-
-
---
--- Name: authors; Type: TABLE; Schema: public; Owner: postgres
---
-
+-- Tables
 CREATE TABLE public.authors (
-    author_id integer NOT NULL,
-    name character varying(100) NOT NULL,
-    bio text
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
 );
 
-
-ALTER TABLE public.authors OWNER TO postgres;
-
---
--- Name: authors_author_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.authors_author_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.authors_author_id_seq OWNER TO postgres;
-
---
--- Name: authors_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.authors_author_id_seq OWNED BY public.authors.author_id;
-
-
---
--- Name: manga; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.manga (
-    manga_id integer NOT NULL,
-    title character varying(200) NOT NULL,
-    description text,
-    release_date date,
-    author_id integer,
-    pack_id integer,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    cover_image text DEFAULT 'image\Broken-icon.png'::text,
-    status character varying(20) DEFAULT 'ended'::character varying
-);
-
-
-ALTER TABLE public.manga OWNER TO postgres;
-
---
--- Name: mangas_manga_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.mangas_manga_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.mangas_manga_id_seq OWNER TO postgres;
-
---
--- Name: mangas_manga_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.mangas_manga_id_seq OWNED BY public.manga.manga_id;
-
-
---
--- Name: chapter; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.chapter (
-    chapter_id integer DEFAULT nextval('public.mangas_manga_id_seq'::regclass) NOT NULL,
+CREATE TABLE public.chapters (
+    id integer NOT NULL,
     manga_id integer,
-    num integer,
-    time_updated timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    chapter_number integer NOT NULL,
+    title character varying(255),
+    release_date date
 );
 
+CREATE TABLE public.genres (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL
+);
 
-ALTER TABLE public.chapter OWNER TO postgres;
-
---
--- Name: comments; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.comments (
-    comment_id integer NOT NULL,
-    user_id integer NOT NULL,
+CREATE TABLE public.manga_authors (
     manga_id integer NOT NULL,
-    content text NOT NULL,
-    posted_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    author_id integer NOT NULL,
+    role public.author_role NOT NULL
 );
 
+CREATE TABLE public.manga_genres (
+    manga_id integer NOT NULL,
+    genre_id integer NOT NULL
+);
 
-ALTER TABLE public.comments OWNER TO postgres;
-
---
--- Name: comments_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.comments_comment_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.comments_comment_id_seq OWNER TO postgres;
-
---
--- Name: comments_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.comments_comment_id_seq OWNED BY public.comments.comment_id;
-
-
---
--- Name: packs; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.packs (
-    pack_id integer NOT NULL,
-    name character varying(100) NOT NULL,
+CREATE TABLE public.mangas (
+    id integer NOT NULL,
+    picture character varying(255),
+    background_picture character varying(255),
+    name character varying(255) NOT NULL,
+    name_ua character varying(255),
+    release_date date,
+    status public.manga_status NOT NULL,
+    number_of_chapters integer DEFAULT 0,
     description text
 );
 
-
-ALTER TABLE public.packs OWNER TO postgres;
-
---
--- Name: packs_pack_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.packs_pack_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.packs_pack_id_seq OWNER TO postgres;
-
---
--- Name: packs_pack_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.packs_pack_id_seq OWNED BY public.packs.pack_id;
-
-
---
--- Name: ratings; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.ratings (
-    rating_id integer NOT NULL,
-    user_id integer NOT NULL,
-    manga_id integer NOT NULL,
-    rating integer,
-    rated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT ratings_rating_check CHECK (((rating >= 1) AND (rating <= 5)))
+CREATE TABLE public.pages (
+    id integer NOT NULL,
+    chapter_id integer,
+    page_number integer NOT NULL,
+    image_url character varying(255) NOT NULL
 );
 
-
-ALTER TABLE public.ratings OWNER TO postgres;
-
---
--- Name: ratings_rating_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.ratings_rating_id_seq
+-- Sequences
+CREATE SEQUENCE public.authors_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -247,37 +68,7 @@ CREATE SEQUENCE public.ratings_rating_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER SEQUENCE public.ratings_rating_id_seq OWNER TO postgres;
-
---
--- Name: ratings_rating_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.ratings_rating_id_seq OWNED BY public.ratings.rating_id;
-
-
---
--- Name: user_manga_status; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.user_manga_status (
-    status_id integer NOT NULL,
-    user_id integer NOT NULL,
-    manga_id integer NOT NULL,
-    status character varying(50) NOT NULL,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT user_manga_status_status_check CHECK (((status)::text = ANY ((ARRAY['want to read'::character varying, 'reading'::character varying, 'completed'::character varying, 'dropped'::character varying])::text[])))
-);
-
-
-ALTER TABLE public.user_manga_status OWNER TO postgres;
-
---
--- Name: user_manga_status_status_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.user_manga_status_status_id_seq
+CREATE SEQUENCE public.chapters_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -285,36 +76,7 @@ CREATE SEQUENCE public.user_manga_status_status_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER SEQUENCE public.user_manga_status_status_id_seq OWNER TO postgres;
-
---
--- Name: user_manga_status_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.user_manga_status_status_id_seq OWNED BY public.user_manga_status.status_id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.users (
-    user_id integer NOT NULL,
-    username character varying(50) NOT NULL,
-    email character varying(100) NOT NULL,
-    password_hash text NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
-);
-
-
-ALTER TABLE public.users OWNER TO postgres;
-
---
--- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.users_user_id_seq
+CREATE SEQUENCE public.genres_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -322,35 +84,7 @@ CREATE SEQUENCE public.users_user_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER SEQUENCE public.users_user_id_seq OWNER TO postgres;
-
---
--- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
-
-
---
--- Name: views; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.views (
-    view_id integer NOT NULL,
-    user_id integer,
-    manga_id integer NOT NULL,
-    viewed_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
-);
-
-
-ALTER TABLE public.views OWNER TO postgres;
-
---
--- Name: views_view_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.views_view_id_seq
+CREATE SEQUENCE public.mangas_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -358,360 +92,216 @@ CREATE SEQUENCE public.views_view_id_seq
     NO MAXVALUE
     CACHE 1;
 
+CREATE SEQUENCE public.pages_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
-ALTER SEQUENCE public.views_view_id_seq OWNER TO postgres;
+-- Sequence ownership
+ALTER SEQUENCE public.authors_id_seq OWNED BY public.authors.id;
+ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
+ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
+ALTER SEQUENCE public.mangas_id_seq OWNED BY public.mangas.id;
+ALTER SEQUENCE public.pages_id_seq OWNED BY public.pages.id;
 
---
--- Name: views_view_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
+-- Defaults
+ALTER TABLE ONLY public.authors ALTER COLUMN id SET DEFAULT nextval('public.authors_id_seq'::regclass);
+ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.chapters_id_seq'::regclass);
+ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genres_id_seq'::regclass);
+ALTER TABLE ONLY public.mangas ALTER COLUMN id SET DEFAULT nextval('public.mangas_id_seq'::regclass);
+ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_id_seq'::regclass);
 
-ALTER SEQUENCE public.views_view_id_seq OWNED BY public.views.view_id;
+-- Data
+--INSERT INTO public.authors (id, name) VALUES
+-- (додайте дані якщо є, зараз порожньо)
+--;
 
+--INSERT INTO public.chapters (id, manga_id, chapter_number, title, release_date) VALUES
+-- (додайте дані якщо є, зараз порожньо)
+--;
 
---
--- Name: admins admin_id; Type: DEFAULT; Schema: public; Owner: postgres
---
+INSERT INTO public.genres (id, name) VALUES
+(1, 'Дія'),
+(2, 'Пригоди'),
+(3, 'Комедія'),
+(4, 'Драма'),
+(5, 'Фантастика'),
+(6, 'Жахи'),
+(7, 'Романтика'),
+(8, 'Наукова фантастика'),
+(9, 'Сейнен'),
+(10, 'Шонен'),
+(11, 'Шоджо'),
+(12, 'Надприродне'),
+(13, 'Спорт'),
+(14, 'Історія'),
+(15, 'Психологічний'),
+(16, 'Містика'),
+(17, 'Шматок життя'),
+(18, 'Музичний'),
+(19, 'Меха'),
+(20, 'Фентезі')
+;
 
-ALTER TABLE ONLY public.admins ALTER COLUMN admin_id SET DEFAULT nextval('public.admins_admin_id_seq'::regclass);
+--INSERT INTO public.manga_authors (manga_id, author_id, role) VALUES
+-- (додайте дані якщо є, зараз порожньо)
+--;
 
+INSERT INTO public.manga_genres (manga_id, genre_id) VALUES
+(1,1),(1,2),(1,4),(1,5),(1,6),(1,15),
+(2,1),(2,2),(2,12),(2,10),
+(3,1),(3,4),(3,14),(3,9),
+(4,1),(4,2),(4,3),(4,5),(4,10),
+(5,2),(5,4),(5,6),(5,10),
+(6,1),(6,7),(6,8),(6,12),(6,14),
+(7,3),(7,5),(7,9),
+(8,1),(8,2),(8,6),(8,11),(8,15),
+(9,4),(9,7),(9,10),(9,13),
+(10,1),(10,2),(10,9),(10,12),
+(11,3),(11,6),(11,8),(11,15),
+(12,1),(12,2),(12,4),(12,11),
+(13,5),(13,7),(13,9),(13,13),
+(14,2),(14,6),(14,10),
+(15,1),(15,3),(15,4),(15,12),(15,14),
+(16,2),(16,5),(16,7),(16,15),
+(17,1),(17,6),(17,8),(17,13),
+(18,3),(18,4),(18,9),(18,10),
+(19,2),(19,5),(19,11),(19,12),
+(20,1),(20,4),(20,7),(20,15),
+(21,3),(21,6),(21,8),(21,14),
+(22,2),(22,5),(22,9),(22,13),
+(23,1),(23,3),(23,6),(23,11),(23,12),
+(24,2),(24,4),(24,7),(24,15),
+(25,1),(25,5),(25,9),(25,13),
+(26,3),(26,6),(26,8),(26,14),
+(27,2),(27,4),(27,10),(27,12),
+(28,1),(28,7),(28,11),(28,15),
+(29,3),(29,6),(29,9),(29,13),
+(30,2),(30,4),(30,8),(30,14),
+(31,1),(31,3),(31,5),(31,12),
+(32,2),(32,6),(32,7),(32,15),
+(33,1),(33,4),(33,8),(33,13),
+(34,3),(34,5),(34,9),(34,14),
+(35,2),(35,6),(35,10),(35,11),
+(36,1),(36,7),(36,12),(36,15),
+(37,3),(37,4),(37,8),(37,13),
+(38,2),(38,5),(38,9),(38,14),
+(39,1),(39,6),(39,10),(39,11),
+(40,3),(40,7),(40,12),(40,15),
+(41,2),(41,4),(41,8),(41,13),
+(42,1),(42,5),(42,9),(42,14),
+(43,3),(43,6),(43,10),(43,11),
+(44,2),(44,7),(44,12),(44,15),
+(45,1),(45,4),(45,8),(45,13),
+(46,3),(46,5),(46,9),(46,14)
+;
 
---
--- Name: authors author_id; Type: DEFAULT; Schema: public; Owner: postgres
---
+INSERT INTO public.mangas (id, picture, background_picture, name, name_ua, release_date, status, number_of_chapters, description) VALUES
+(1,'placeholder/berserk.jpg','background/berserk.jpg','Berserk','Берсерк','1989-08-25','Завершена',374,'Guts, a mercenary, fights in a dark fantasy world filled with demons and apost les.'),
+(2,'placeholder/steel_ball_run.jpg','background/steel_ball_run.jpg','JoJo no Kimyou na Bouken Part 7: Steel Ball Run','JоJo: Steel Ball Run','2004-01-19','Завершена',95,'A horse race across America with supernatural powers.'),
+(3,'placeholder/vagabond.jpg','background/vagabond.jpg','Vagabond','Вагабонд','1998-03-23','Онгоїнг',327,'The life of samurai Miyamoto Musashi.'),
+(4,'placeholder/one_piece.jpg','background/one_piece.jpg','One Piece','Ван Піс','1997-07-22','Онгоїнг',1100,'Pirate Monkey D. Luffy searches for the One Piece treasure.'),
+(5,'placeholder/monster.jpg','background/monster.jpg','Monster','Монстр','1994-12-05','Завершена',162,'Dr. Tenma hunts a serial killer he saved.'),
+(6,'placeholder/guimi_zhi_zhu.jpg','background/guimi_zhi_zhu.jpg','Guimi Zhi Zhu','Гуімі Чжі Чжу','2023-01-01','Завершена',50,'Mystery story about friends and spiders.'),
+(7,'placeholder/vinland_saga.jpg','background/vinland_saga.jpg','Vinland Saga','Сага про Вінланд','2005-04-13','Онгоїнг',212,'Viking Thorfinn seeks revenge and a peaceful life.'),
+(8,'placeholder/slam_dunk.jpg','background/slam_dunk.jpg','Slam Dunk','Слем Данк','1990-10-01','Завершена',276,'Hanamichi Sakuragi joins basketball team.'),
+(9,'placeholder/fullmetal_alchemist.jpg','background/fullmetal_alchemist.jpg','Fullmetal Alchemist','Сталевий Алхімік','2001-07-12','Завершена',116,'Brothers search for the Philosopher''s Stone.'),
+(10,'placeholder/omniscient_readers_viewpoint.jpg','background/omniscient_readers_viewpoint.jpg','Omniscient Reader''s Viewpoint','Всезнаючий Читач','2020-05-26','Завершена',200,'Kim Dokja enters the world of his favorite novel.'),
+(11,'placeholder/grand_blue.jpg','background/grand_blue.jpg','Grand Blue','Гранд Блю','2014-04-07','Онгоїнг',90,'College life with diving club and comedy.'),
+(12,'placeholder/kingdom.jpg','background/kingdom.jpg','Kingdom','Королівство','2006-01-26','Онгоїнг',780,'War orphan Xin becomes a great general.'),
+(13,'placeholder/tian_guan_cifu.jpg','background/tian_guan_cifu.jpg','Tian Guan Cifu','Благословіння Небесних Чиновників','2017-10-31','Завершена',244,'God and ghost king romance.'),
+(14,'placeholder/oyasumi_punpun.jpg','background/oyasumi_punpun.jpg','Oyasumi Punpun','На добраніч, Пунпун','2007-03-15','Завершена',147,'Coming-of-age story with psychological depth.'),
+(15,'placeholder/houseki_no_kuni.jpg','background/houseki_no_kuni.jpg','Houseki no Kuni','Країна Самоцвітів','2012-10-25','Онгоїнг',108,'Gem beings fight lunarians.'),
+(16,'placeholder/real.jpg','background/real.jpg','Real','Реал','1999-01-01','Онгоїнг',95,'Wheelchair basketball and personal growth.'),
+(17,'placeholder/20th_century_boys.jpg','background/20th_century_boys.jpg','20th Century Boys','Хлопці 20-го Століття','1999-09-27','Завершена',249,'Friends stop a cult leader''s world domination.'),
+(18,'placeholder/ashita_no_joe.jpg','background/ashita_no_joe.jpg','Ashita no Joe','Завтрашній Джо','1968-01-01','Завершена',171,'Boxer Joe Yabuki''s rise.'),
+(19,'placeholder/yotsuba_to.jpg','background/yotsuba_to.jpg','Yotsuba to!','Йоцуба!','2003-03-21','Онгоїнг',110,'Adventures of energetic girl Yotsuba.'),
+(20,'placeholder/monogatari_first_season.jpg','background/monogatari_first_season.jpg','Monogatari Series: First Season','Серія Моногатарі: Перший Сезон','2006-07-28','Завершена',200,'Vampires and oddities in high school.'),
+(21,'placeholder/umineko_episode_8.jpg','background/umineko_episode_8.jpg','Umineko no Naku Koro ni Chiru - Episode 8','Уміне ко: Епізод 8','2010-12-31','Завершена',22,'Mystery on island with witches.'),
+(22,'placeholder/monogatari_second_season.jpg','background/monogatari_second_season.jpg','Monogatari Series: Second Season','Серія Моногатарі: Другий Сезон','2012-07-06','Завершена',150,'Continuation of supernatural stories.'),
+(23,'placeholder/kaguya_sama.jpg','background/kaguya_sama.jpg','Kaguya-sama wa Kokurasetai','Кагуя-сама: Любов це Війна','2015-05-19','Завершена',281,'Student council romance comedy.'),
+(24,'placeholder/mo_dao_zu_shi.jpg','background/mo_dao_zu_shi.jpg','Mo Dao Zu Shi','Засновник Дияволізму','2015-10-31','Завершена',126,'Cultivator Wei Wuxian''s revival.'),
+(25,'placeholder/mikkakan_no_koufuku.jpg','background/mikkakan_no_koufuku.jpg','Mikkakan no Koufuku','Три Дні Щастя','2013-06-25','Завершена',1,'Selling lifespan for money.'),
+(26,'placeholder/sousou_no_frieren.jpg','background/sousou_no_frieren.jpg','Sousou no Frieren','Фрірен: За Межами Кінця Подорожі','2020-04-28','Онгоїнг',130,'Elf mage reflects on life after hero''s death.'),
+(27,'placeholder/gto.jpg','background/gto.jpg','GTO','Великий Вчитель Онідзука','1997-02-14','Завершена',208,'Former delinquent becomes teacher.'),
+(28,'placeholder/haikyuu.jpg','background/haikyuu.jpg','Haikyuu!!','Волейбол!!','2012-02-20','Завершена',407,'High school volleyball team.'),
+(29,'placeholder/3_gatsu_no_lion.jpg','background/3_gatsu_no_lion.jpg','3-gatsu no Lion','Березневий Лев','2007-07-13','Онгоїнг',200,'Shogi player Rei''s life.'),
+(30,'placeholder/koe_no_katachi.jpg','background/koe_no_katachi.jpg','Koe no Katachi','Форма Голосу','2013-08-07','Завершена',64,'Bullying and redemption with deaf girl.'),
+(31,'placeholder/attack_on_titan.jpg','background/attack_on_titan.jpg','Attack on Titan','Атака Титанів','2009-09-09','Завершена',139,'Humanity fights giants.'),
+(32,'placeholder/naruto.jpg','background/naruto.jpg','Naruto','Наруто','1999-09-21','Завершена',700,'Ninja boy with fox spirit.'),
+(33,'placeholder/bleach.jpg','background/bleach.jpg','Bleach','Бліч','2001-08-07','Завершена',705,'Soul reaper Ichigo fights hollows.'),
+(34,'placeholder/dragon_ball.jpg','background/dragon_ball.jpg','Dragon Ball','Драконяча Перлина','1984-11-20','Завершена',519,'Goku searches for dragon balls.'),
+(35,'placeholder/my_hero_academia.jpg','background/my_hero_academia.jpg','My Hero Academia','Моя Геройська Академія','2014-07-07','Завершена',430,'Superhero school for quirk users.'),
+(36,'placeholder/demon_slayer.jpg','background/demon_slayer.jpg','Demon Slayer','Вбивця Демонів','2016-02-15','Завершена',205,'Tanjiro fights demons to save sister.'),
+(37,'placeholder/jujutsu_kaisen.jpg','background/jujutsu_kaisen.jpg','Jujutsu Kaisen','Магічна Битва','2018-03-05','Онгоїнг',250,'Yuji Itadori eats cursed finger.'),
+(38,'placeholder/spy_x_family.jpg','background/spy_x_family.jpg','Spy x Family','Шпигунська Сім''я','2019-03-25','Онгоїнг',90,'Spy forms family with assassin and telepath.'),
+(39,'placeholder/chainsaw_man.jpg','background/chainsaw_man.jpg','Chainsaw Man','Людина-Бензопила','2018-12-03','Онгоїнг',150,'Denji becomes devil hunter with chainsaw powers.'),
+(40,'placeholder/made_in_abyss.jpg','background/made_in_abyss.jpg','Made in Abyss','Створено в Безодні','2012-10-20','Онгоїнг',70,'Explorers descend into the Abyss.'),
+(41,'placeholder/akira.jpg','background/akira.jpg','Akira','Акіра','1982-12-06','Завершена',120,'Psychic powers in post-apocalyptic Tokyo.'),
+(42,'placeholder/ghost_in_the_shell.jpg','background/ghost_in_the_shell.jpg','Ghost in the Shell','Привид в Оболонці','1989-05-01','Завершена',11,'Cyberpunk major Kusanagi fights hackers.'),
+(43,'placeholder/evangelion.jpg','background/evangelion.jpg','Neon Genesis Evangelion','Неоновий Генезис Євангеліон','1994-12-01','Завершена',97,'Teens pilot mechs against angels.'),
+(44,'placeholder/tokyo_ghoul.jpg','background/tokyo_ghoul.jpg','Tokyo Ghoul','Токійський Гуль','2011-09-08','Завершена',143,'Ken Kaneki стає напів-гуля.'),
+(45,'placeholder/promised_neverland.jpg','background/promised_neverland.jpg','The Promised Neverland','Обіцяний Неврленд','2016-08-01','Завершена',181,'Діти втікають з сирітського притулку.'),
+(46,'placeholder/dr_stone.jpg','background/dr_stone.jpg','Dr. Stone','Доктор Стоун','2017-03-06','Завершена',232,'Senku revives civilization after petrification.')
+;
 
-ALTER TABLE ONLY public.authors ALTER COLUMN author_id SET DEFAULT nextval('public.authors_author_id_seq'::regclass);
+--INSERT INTO public.pages (id, chapter_id, page_number, image_url) VALUES
+-- (додайте дані якщо є, зараз порожньо)
+--;
 
+-- Sequence set values
+SELECT pg_catalog.setval('public.authors_id_seq', 34, true);
+SELECT pg_catalog.setval('public.chapters_id_seq', 1, false);
+SELECT pg_catalog.setval('public.genres_id_seq', 20, true);
+SELECT pg_catalog.setval('public.mangas_id_seq', 46, true);
+SELECT pg_catalog.setval('public.pages_id_seq', 1, false);
 
---
--- Name: comments comment_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.comments ALTER COLUMN comment_id SET DEFAULT nextval('public.comments_comment_id_seq'::regclass);
-
-
---
--- Name: manga manga_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.manga ALTER COLUMN manga_id SET DEFAULT nextval('public.mangas_manga_id_seq'::regclass);
-
-
---
--- Name: packs pack_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.packs ALTER COLUMN pack_id SET DEFAULT nextval('public.packs_pack_id_seq'::regclass);
-
-
---
--- Name: ratings rating_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.ratings ALTER COLUMN rating_id SET DEFAULT nextval('public.ratings_rating_id_seq'::regclass);
-
-
---
--- Name: user_manga_status status_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_manga_status ALTER COLUMN status_id SET DEFAULT nextval('public.user_manga_status_status_id_seq'::regclass);
-
-
---
--- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
-
-
---
--- Name: views view_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.views ALTER COLUMN view_id SET DEFAULT nextval('public.views_view_id_seq'::regclass);
-
-
---
--- Name: admins admins_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins
-    ADD CONSTRAINT admins_email_key UNIQUE (email);
-
-
---
--- Name: admins admins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins
-    ADD CONSTRAINT admins_pkey PRIMARY KEY (admin_id);
-
-
---
--- Name: admins admins_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins
-    ADD CONSTRAINT admins_username_key UNIQUE (username);
-
-
---
--- Name: authors authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
+-- Constraints
 ALTER TABLE ONLY public.authors
-    ADD CONSTRAINT authors_pkey PRIMARY KEY (author_id);
+    ADD CONSTRAINT authors_name_key UNIQUE (name);
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
 
---
--- Name: chapter chapter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_name_key UNIQUE (name);
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
 
-ALTER TABLE ONLY public.chapter
-    ADD CONSTRAINT chapter_pkey PRIMARY KEY (chapter_id);
+ALTER TABLE ONLY public.manga_authors
+    ADD CONSTRAINT manga_authors_pkey PRIMARY KEY (manga_id, author_id);
 
+ALTER TABLE ONLY public.manga_genres
+    ADD CONSTRAINT manga_genres_pkey PRIMARY KEY (manga_id, genre_id);
 
---
--- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
+ALTER TABLE ONLY public.mangas
+    ADD CONSTRAINT mangas_pkey PRIMARY KEY (id);
 
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_pkey PRIMARY KEY (comment_id);
+ALTER TABLE ONLY public.pages
+    ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
 
+-- Indexes
+CREATE INDEX idx_chapters_manga_id ON public.chapters USING btree (manga_id);
+CREATE INDEX idx_pages_chapter_id ON public.pages USING btree (chapter_id);
 
---
--- Name: manga mangas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
+-- Foreign keys
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT chapters_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.mangas(id) ON DELETE CASCADE;
 
-ALTER TABLE ONLY public.manga
-    ADD CONSTRAINT mangas_pkey PRIMARY KEY (manga_id);
+ALTER TABLE ONLY public.manga_authors
+    ADD CONSTRAINT manga_authors_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.authors(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.manga_authors
+    ADD CONSTRAINT manga_authors_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.mangas(id) ON DELETE CASCADE;
 
+ALTER TABLE ONLY public.manga_genres
+    ADD CONSTRAINT manga_genres_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genres(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.manga_genres
+    ADD CONSTRAINT manga_genres_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.mangas(id) ON DELETE CASCADE;
 
---
--- Name: packs packs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.packs
-    ADD CONSTRAINT packs_pkey PRIMARY KEY (pack_id);
-
-
---
--- Name: ratings ratings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.ratings
-    ADD CONSTRAINT ratings_pkey PRIMARY KEY (rating_id);
-
-
---
--- Name: user_manga_status user_manga_status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_manga_status
-    ADD CONSTRAINT user_manga_status_pkey PRIMARY KEY (status_id);
-
-
---
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_key UNIQUE (email);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_username_key UNIQUE (username);
-
-
---
--- Name: views views_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.views
-    ADD CONSTRAINT views_pkey PRIMARY KEY (view_id);
-
-
---
--- Name: comments comments_manga_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.manga(manga_id);
-
-
---
--- Name: comments comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
-
-
---
--- Name: manga mangas_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.manga
-    ADD CONSTRAINT mangas_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.authors(author_id);
-
-
---
--- Name: manga mangas_pack_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.manga
-    ADD CONSTRAINT mangas_pack_id_fkey FOREIGN KEY (pack_id) REFERENCES public.packs(pack_id);
-
-
---
--- Name: ratings ratings_manga_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.ratings
-    ADD CONSTRAINT ratings_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.manga(manga_id);
-
-
---
--- Name: ratings ratings_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.ratings
-    ADD CONSTRAINT ratings_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
-
-
---
--- Name: user_manga_status user_manga_status_manga_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_manga_status
-    ADD CONSTRAINT user_manga_status_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.manga(manga_id);
-
-
---
--- Name: user_manga_status user_manga_status_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_manga_status
-    ADD CONSTRAINT user_manga_status_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
-
-
---
--- Name: views views_manga_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.views
-    ADD CONSTRAINT views_manga_id_fkey FOREIGN KEY (manga_id) REFERENCES public.manga(manga_id);
-
-
---
--- Name: views views_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.views
-    ADD CONSTRAINT views_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
-
-
-
--- Вставка 10 рядків у таблицю packs
-INSERT INTO public.packs (pack_id, name, description)
-VALUES
-(1, 'Shonen Jump', 'Popular shonen manga pack'),
-(2, 'Grand Line', 'Pirate adventure pack'),
-(3, 'Soul Society', 'Spiritual action pack'),
-(4, 'Titan Pack', 'Survival and action pack'),
-(5, 'Mystery Pack', 'Thriller and mystery manga'),
-(6, 'Martial Arts', 'Classic martial arts stories'),
-(7, 'Hero School', 'Superhero training stories'),
-(8, 'Demon Hunt', 'Dark fantasy and demon hunting'),
-(9, 'Cursed Energy', 'Supernatural battles pack'),
-(10, 'Chainsaw Action', 'Unique action manga');
-
-
--- Вставка 10 рядків у таблицю authors
-INSERT INTO public.authors (name, bio)
-VALUES
-('Masashi Kishimoto', 'Author of Naruto. Japanese manga artist.'),
-('Eiichiro Oda', 'Author of One Piece. Japanese manga artist.'),
-('Tite Kubo', 'Author of Bleach. Japanese manga artist.'),
-('Hajime Isayama', 'Author of Attack on Titan. Japanese manga artist.'),
-('Tsugumi Ohba', 'Author of Death Note. Japanese manga writer.'),
-('Akira Toriyama', 'Author of Dragon Ball. Japanese manga artist.'),
-('Kohei Horikoshi', 'Author of My Hero Academia. Japanese manga artist.'),
-('Koyoharu Gotouge', 'Author of Demon Slayer. Japanese manga artist.'),
-('Gege Akutami', 'Author of Jujutsu Kaisen. Japanese manga artist.'),
-('Tatsuki Fujimoto', 'Author of Chainsaw Man. Japanese manga artist.');
---
--- Вставка 10 рядків у таблицю manga
-INSERT INTO public.manga (title, description, release_date, author_id, pack_id, cover_image, status)
-VALUES
-('Naruto', 'Ninja adventures in Konoha', '2002-10-03', 1, 1, 'image/naruto.png', 'ended'),
-('One Piece', 'Pirate journey for treasure', '1999-10-20', 2, 2, 'image/onepiece.png', 'ongoing'),
-('Bleach', 'Soul reapers and hollows', '2004-10-05', 3, 3, 'image/bleach.png', 'ended'),
-('Attack on Titan', 'Humanity vs Titans', '2013-04-07', 4, 4, 'image/aot.png', 'ended'),
-('Death Note', 'Notebook of death', '2006-10-04', 5, 5, 'image/deathnote.png', 'ended'),
-('Dragon Ball', 'Martial arts and dragons', '1986-02-26', 6, 6, 'image/dragonball.png', 'ended'),
-('My Hero Academia', 'Superpowers in school', '2016-04-03', 7, 7, 'image/mha.png', 'ongoing'),
-('Demon Slayer', 'Demon hunting siblings', '2019-04-06', 8, 8, 'image/demonslayer.png', 'ended'),
-('Jujutsu Kaisen', 'Cursed energy battles', '2020-10-03', 9, 9, 'image/jujutsu.png', 'ongoing'),
-('Chainsaw Man', 'Chainsaw devil hunter', '2022-10-12', 10, 10, 'image/chainsawman.png', 'ongoing');
-
--- Вставка 10 рядків у таблицю users
-INSERT INTO public.users (user_id, username, email, password_hash)
-VALUES
-(1, 'user1', 'user1@example.com', 'hash1'),
-(2, 'user2', 'user2@example.com', 'hash2'),
-(3, 'user3', 'user3@example.com', 'hash3'),
-(4, 'user4', 'user4@example.com', 'hash4'),
-(5, 'user5', 'user5@example.com', 'hash5'),
-(6, 'user6', 'user6@example.com', 'hash6'),
-(7, 'user7', 'user7@example.com', 'hash7'),
-(8, 'user8', 'user8@example.com', 'hash8'),
-(9, 'user9', 'user9@example.com', 'hash9'),
-(10, 'user10', 'user10@example.com', 'hash10');
-
--- Вставка 10 рядків у таблицю ratings
-INSERT INTO public.ratings (user_id, manga_id, rating)
-VALUES
-(1, 1, 5),
-(2, 2, 4),
-(3, 3, 5),
-(4, 4, 3),
-(5, 5, 5),
-(6, 6, 4),
-(7, 7, 5),
-(8, 8, 4),
-(9, 9, 5),
-(10, 10, 3);
-
--- Вставка 10 рядків у таблицю chapter
-INSERT INTO public.chapter (manga_id, num)
-VALUES
-(1, 1),
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(10, 1);
-
-
-
---
--- PostgreSQL database dump complete
---
-
+ALTER TABLE ONLY public.pages
+    ADD CONSTRAINT pages_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.chapters(id) ON DELETE CASCADE;

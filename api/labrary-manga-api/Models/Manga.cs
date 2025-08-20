@@ -1,47 +1,46 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace labrary_manga_api.Models
 {
-    [Table("manga")]
+    [Table("mangas")]
     public class Manga
     {
         [Key]
-        [Column("manga_id")]
+        [Column("id")]
         public int MangaId { get; set; }
 
+        [Column("picture")]
+        public string? Picture { get; set; }
+
+        [Column("background_picture")]
+        public string? BackgroundPicture { get; set; }
+
         [Required]
-        [MaxLength(200)]
-        [Column("title")]
+        [MaxLength(255)]
+        [Column("name")]
         public string Title { get; set; }
 
-        [Column("description")]
-        public string? Description { get; set; }
+        [Column("name_ua")]
+        public string? TitleUa { get; set; }
 
         [Column("release_date")]
         public DateTime? ReleaseDate { get; set; }
 
-        [ForeignKey("Author")]
-        [Column("author_id")]
-        public int? AuthorId { get; set; }
-
-        public Author? Author { get; set; }
-
-        [ForeignKey("Pack")]
-        [Column("pack_id")]
-        public int? PackId { get; set; }
-
-        public Pack? Pack { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        [Column("cover_image")]
-        public string? CoverImage { get; set; }
         [Column("status")]
-        public string Status { get; set; } = "Ended";
+        public string? Status { get; set; }
 
-        public List<Chapter> Chapters { get; set; }
+        [Column("number_of_chapters")]
+        public int NumberOfChapters { get; set; }
+
+        [Column("description")]
+        public string? Description { get; set; }
+
+        // Navigation properties
+        public ICollection<MangaAuthor> MangaAuthors { get; set; } = new List<MangaAuthor>();
+        public ICollection<MangaGenre> MangaGenres { get; set; } = new List<MangaGenre>();
+        public ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
     }
 }

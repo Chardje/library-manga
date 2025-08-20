@@ -1,24 +1,29 @@
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace labrary_manga_api.Models
 {
-    [Table("chapter")]
+    [Table("chapters")]
     public class Chapter
     {
-        [Column("chapter_id")]
+        [Key]
+        [Column("id")]
         public int ChapterId { get; set; }
-
 
         [ForeignKey("Manga")]
         [Column("manga_id")]
-        public int MangaId { get; set; }        
+        public int MangaId { get; set; }
 
-
-        [Column("num")]
+        [Column("chapter_number")]
         public int ChapterNumber { get; set; }
 
+        [Column("title")]
+        public string? Title { get; set; }
 
-        [Column("time_updated")]
-        public DateTime TimeUpdated { get; set; }
+        [Column("release_date")]
+        public DateTime? ReleaseDate { get; set; }
+
+        public Manga? Manga { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace labrary_manga_api.Models
 {
@@ -10,7 +11,7 @@ namespace labrary_manga_api.Models
 
         public string Status { get; set; }
 
-        public string CoverImage { get; set; }
+        public string? Picture { get; set; }
 
         public int Chapters { get; set; }
 
@@ -19,7 +20,7 @@ namespace labrary_manga_api.Models
             Id = manga.MangaId;
             Title = manga.Title;
             Status = manga.Status;
-            CoverImage = manga.CoverImage;
+            Picture = manga.Picture;
             Chapters = manga.Chapters?.Count ?? chapters;
         }
 

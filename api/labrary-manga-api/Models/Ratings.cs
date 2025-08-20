@@ -24,6 +24,6 @@ namespace labrary_manga_api.Models
         [Column("rated_at")]
         public DateTime RatedAt { get; set; } = DateTime.UtcNow;
 
-        public virtual Manga Manga { get; set; }
+        public virtual Manga? Manga { get; set; }
     }
 }
