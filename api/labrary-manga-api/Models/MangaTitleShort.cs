@@ -7,9 +7,9 @@ namespace labrary_manga_api.Models
     {
         public int Id { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; } // changed to nullable
 
-        public string Status { get; set; }
+        public string? Status { get; set; } // changed to nullable
 
         public string? Picture { get; set; }
 
@@ -18,8 +18,8 @@ namespace labrary_manga_api.Models
         public MangaTitleShort(Manga manga , int chapters = 0)
         {
             Id = manga.MangaId;
-            Title = manga.Title;
-            Status = manga.Status;
+            Title = manga.Title ?? string.Empty;
+            Status = manga.Status ?? string.Empty;
             Picture = manga.Picture;
             Chapters = manga.Chapters?.Count ?? chapters;
         }

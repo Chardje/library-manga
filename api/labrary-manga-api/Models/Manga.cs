@@ -21,7 +21,7 @@ namespace labrary_manga_api.Models
         [Required]
         [MaxLength(255)]
         [Column("name")]
-        public string Title { get; set; }
+        public string? Title { get; set; } // changed to nullable
 
         [Column("name_ua")]
         public string? TitleUa { get; set; }

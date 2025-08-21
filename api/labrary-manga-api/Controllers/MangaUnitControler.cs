@@ -20,10 +20,10 @@ namespace labrary_manga_api.Controllers
         public async Task<ActionResult<MangaUnit>> GetMangaUnit(int id)
         {
             var manga = await _context.Mangas
-            .FirstOrDefaultAsync(m => m.MangaId == id)
                 .Include(m => m.Chapters)
                 .Include(m => m.MangaAuthors)
-                .ThenInclude(ma => ma.Author);
+                .ThenInclude(ma => ma.Author)
+                .FirstOrDefaultAsync(m => m.MangaId == id);
             if (manga == null)
                 return NotFound();
             return Ok(new MangaUnit(manga));
