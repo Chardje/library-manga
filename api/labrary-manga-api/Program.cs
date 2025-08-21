@@ -1,4 +1,3 @@
-
 using labrary_manga_api.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +18,11 @@ internal class Program
             });
         });
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            });
 
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
