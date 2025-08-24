@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 </head>
 
 <body>
-    <script type="module" src="handlesmalmanga.js"></script>
-    <div id="app">
-        <h1>Welcome to the Manga Library</h1>
-        <p>Loading manga titles...</p>
-        <div id="manga-list">
-            <h1>Library Manga</h1>
-      <button id="random" type="button" onclick="getListManga()">random</button>
-      <div id="manga-list"></div>
-        </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script type="module" src="./main.js"></script>
+  <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">Слайд 1</div>
+        <div class="swiper-slide">Слайд 2</div>
+        <div class="swiper-slide">Слайд 3</div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination"></div>
     </div>
+  `;
 </body>
 
 </html>

@@ -3,6 +3,6 @@ export interface IMangaTitleShort {
   id: number;
   title: string;
   status: string;
-  coverImage: string;
+  picture: string;
   chapters: number;
 }

@@ -12,10 +12,13 @@ services:
   front:
     build: ./front
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
       - ./front:/app
       - ./front/dest:/app/dest
+      - ./front/node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
   db:
     image: postgres:16
     restart: always
