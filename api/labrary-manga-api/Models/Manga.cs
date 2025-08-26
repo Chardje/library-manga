@@ -38,6 +38,11 @@ namespace labrary_manga_api.Models
         [Column("description")]
         public string? Description { get; set; }
 
+        [Column("vidget")]
+        [Required]
+        [MaxLength(10)]
+        public string Vidget { get; set; }
+
         // Navigation properties
         public ICollection<MangaAuthor> MangaAuthors { get; set; } = new List<MangaAuthor>();
         public ICollection<MangaGenre> MangaGenres { get; set; } = new List<MangaGenre>();
