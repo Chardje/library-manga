@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using labrary_manga_api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace labrary_manga_api.Data;
 
@@ -28,23 +28,15 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Page>().ToTable("pages");
 
         // Composite keys for join tables
-        modelBuilder.Entity<MangaAuthor>()
-            .HasKey(ma => new { ma.MangaId, ma.AuthorId });
+        modelBuilder.Entity<MangaAuthor>().HasKey(ma => new { ma.MangaId, ma.AuthorId });
 
-        modelBuilder.Entity<MangaGenre>()
-            .HasKey(mg => new { mg.MangaId, mg.GenreId });
+        modelBuilder.Entity<MangaGenre>().HasKey(mg => new { mg.MangaId, mg.GenreId });
 
         // Enum mapping (Postgres)
-        modelBuilder.Entity<Manga>()
-            .Property(m => m.Status)
-            .HasColumnType("manga_status");
+        modelBuilder.Entity<Manga>().Property(m => m.Status).HasColumnType("manga_status");
 
-        modelBuilder.Entity<Manga>()
-            .Property(m => m.Vidget)
-            .HasColumnType("manga_vidget");
+        modelBuilder.Entity<Manga>().Property(m => m.Vidget).HasColumnType("manga_vidget");
 
-        modelBuilder.Entity<MangaAuthor>()
-            .Property(ma => ma.Role)
-            .HasColumnType("author_role");
+        modelBuilder.Entity<MangaAuthor>().Property(ma => ma.Role).HasColumnType("author_role");
     }
 }

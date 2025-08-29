@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using labrary_manga_api.Data;
 using labrary_manga_api.Models;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace labrary_manga_api.Controllers
 {
@@ -20,8 +20,8 @@ namespace labrary_manga_api.Controllers
         [HttpGet("carousel")]
         public async Task<ActionResult<List<MangaTitleShort>>> GetCarousel()
         {
-            var mangas = await _context.Mangas
-                .Where(m => m.Vidget == "carousel")
+            var mangas = await _context
+                .Mangas.Where(m => m.Vidget == "carousel")
                 .Include(m => m.Chapters)
                 .ToListAsync();
 
@@ -33,8 +33,8 @@ namespace labrary_manga_api.Controllers
         [HttpGet("popular")]
         public async Task<ActionResult<List<MangaTitleShort>>> GetPopular()
         {
-            var mangas = await _context.Mangas
-                .Where(m => m.Vidget == "popular")
+            var mangas = await _context
+                .Mangas.Where(m => m.Vidget == "popular")
                 .Include(m => m.Chapters)
                 .ToListAsync();
 
@@ -46,8 +46,8 @@ namespace labrary_manga_api.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult<List<MangaTitleShort>>> GetLatest()
         {
-            var mangas = await _context.Mangas
-                .Where(m => m.Vidget == "latest")
+            var mangas = await _context
+                .Mangas.Where(m => m.Vidget == "latest")
                 .Include(m => m.Chapters)
                 .ToListAsync();
 

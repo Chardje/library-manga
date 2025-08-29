@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using labrary_manga_api.Data;
 using labrary_manga_api.Models;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace labrary_manga_api.Controllers
 {
@@ -16,17 +15,18 @@ namespace labrary_manga_api.Controllers
         {
             _context = context;
         }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<MangaUnit>> GetMangaUnit(int id)
+        public async Task<ActionResult<Manga>> GetMangaUnit(int id)
         {
-            var manga = await _context.Mangas
-                .Include(m => m.Chapters)
+            var manga = await _context
+                .Mangas.Include(m => m.Chapters)
                 .Include(m => m.MangaAuthors)
                 .ThenInclude(ma => ma.Author)
                 .FirstOrDefaultAsync(m => m.MangaId == id);
             if (manga == null)
                 return NotFound();
-            return Ok(new MangaUnit(manga));
+            return Ok(manga);
         }
     }
 }

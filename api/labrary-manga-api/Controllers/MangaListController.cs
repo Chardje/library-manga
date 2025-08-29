@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using labrary_manga_api.Data;
 using labrary_manga_api.Models;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace labrary_manga_api.Controllers
 {
@@ -16,11 +15,14 @@ namespace labrary_manga_api.Controllers
         {
             _context = context;
         }
+
         [HttpGet("random")]
-        public async Task<ActionResult<List<MangaTitleShort>>> GetRandomManga([FromQuery] int count = 1)
+        public async Task<ActionResult<List<MangaTitleShort>>> GetRandomManga(
+            [FromQuery] int count = 1
+        )
         {
-            var manga = await _context.Mangas
-                .OrderBy(m => Guid.NewGuid())
+            var manga = await _context
+                .Mangas.OrderBy(m => Guid.NewGuid())
                 .Include(m => m.Chapters)
                 .Take(count)
                 .ToListAsync();
@@ -33,11 +35,14 @@ namespace labrary_manga_api.Controllers
             }
             return Ok(result);
         }
+
         [HttpGet("latest")]
-        public async Task<ActionResult<List<MangaTitleShort>>> GetLatestManga([FromQuery] int count = 1)
+        public async Task<ActionResult<List<MangaTitleShort>>> GetLatestManga(
+            [FromQuery] int count = 1
+        )
         {
-            var manga = await _context.Mangas
-                .OrderByDescending(m => m.ReleaseDate)
+            var manga = await _context
+                .Mangas.OrderByDescending(m => m.ReleaseDate)
                 .Include(m => m.Chapters)
                 .Take(count)
                 .ToListAsync();

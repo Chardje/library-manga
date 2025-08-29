@@ -20,4 +20,3 @@ namespace labrary_manga_api.Models
         public ICollection<MangaAuthor> MangaAuthors { get; set; } = new List<MangaAuthor>();
     }
 }
-
