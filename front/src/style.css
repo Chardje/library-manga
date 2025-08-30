@@ -22,7 +22,6 @@
 .header {
   margin-bottom: 20px;
   margin-left: 10%;
-  margin-left: 10%;
 }
 
 .main {
@@ -121,7 +120,7 @@ h3 {
 
 .section-title {
   text-align: left;
-  
+  margin :10px;
 }
 
 .line-box {
@@ -130,47 +129,144 @@ h3 {
 }
 
 .flex-container {
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  /* Відстань між слайдами */
   border-radius: 8px;
-  padding: 8px;
   width: 100%;
 
 }
 
 .swiper {
   display: flex;
-  height: 180px;
-  margin-top: 10px;
+  flex-direction: column;
   background-color: var(--color-light);
   border-radius: 8px;
   max-width: 1280px;
   width: 100%;
+  overflow: hidden;
+  min-height: 300px; 
+}
 
+.swiper-slide img {
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius: 8px 8px 0 0;
 }
 
 .swiper-wrapper {
   align-items: center;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  height: auto;
+  min-height: 260px;
+  height: 260px;
+  box-sizing: border-box;
+  display: flex;
 }
 
 .swiper-slide {
   background-color: var(--color-accent);
   display: flex;
-
   justify-content: center;
   align-items: center;
   font-size: 12px;
   font-weight: bold;
   color: var(--color-bg);
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 8px;
+  height: 260px;
+  max-height: 260px;
+  min-height: 260px;
+  flex: 1 0 auto;
+  width: 130px;
+  max-width: 130px;
+  min-width: 130px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
-  height: 160px;
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
+.swiper-slide-content {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: relative; /* Додаємо для абсолютного позиціонування info */
+  padding-bottom: 32px; /* Місце для info внизу */
+}
+
+.swiper-slide-title {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  position: relative;
+  padding-bottom: 8px; /* Відступ від info */
+  z-index: 2;
+  margin: 8px 0px 0 8px;
+}
+
+.swiper-slide-label {
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1.3;
+  color: var(--color-bg);
+  display: block;
+  max-height: 32px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  z-index: 2;
+}
+
+.swiper-slide-info {
+  align-items: flex-start;
+  font-size: 0.85em;
+  color: var(--color-bg);
+  font-weight: 500;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-top: 24px;
+  padding-bottom: 8px;
+  padding-left: 0;
+  padding-right: 0;
+  background: linear-gradient(to top, var(--color-accent) 80%, transparent 100%);
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swiper-slide-chapters,
+.swiper-slide-status {
+  font-size: 1em;
+  color: var(--color-bg);
+  font-weight: 500;
+}
+
+.swiper-slide-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-gray);
+  display: inline-block;
 }
 
 .swiper-button-next,
@@ -193,13 +289,24 @@ h3 {
   background-color: var(--color-light);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  color: var(--color-bg);  
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  max-width: 300px;
+  color: var(--color-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-
+.popular-manga-cover{
+  border-radius: 6px;
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 0;
+  background: var(--color-bg);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -214,7 +321,9 @@ button {
 }
 
 button:hover {
-  border-color: var(--color-light);
+  border-color: var(--color-accent);
+  background-color: var(--color-light);
+  color: var(--color-accent);
 }
 
 button:focus,
@@ -222,18 +331,125 @@ button:focus-visible {
   outline: 4px auto var(--color-light);
 }
 
+.popular-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 16px;
+  margin: 0 auto;
+}
+
+.popular-table td {
+  vertical-align: middle;
+  padding: 0;
+  border: none;
+}
+
+.popular-manga-item h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.1em;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.popular-manga-item p {
+  margin: 0;
+  font-size: 0.95em;
+  color: var(--color-gray);
+}
+
+.mt-1.truncate {
+  display: block;
+  margin-top: 0.25rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-width: 100%;
+}
+
+.aspect-ratio-wrapper {
+  width: 100%;
+  height: 180px;
+  min-height: 180px;
+  max-height: 180px;
+  padding-bottom: 0;
+  position: relative;
+}
+
+.aspect-ratio-inner {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.aspect-ratio-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+  opacity: 1;
+  background: transparent;
+}
+
+.manga-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  margin: 32px auto;
+  max-width: 900px;
+  background: var(--color-light);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.manga-details-cover img {
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  max-width: 220px;
+  height: auto;
+}
+
+.manga-details-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.manga-details-info h2 {
+  margin-top: 0;
+  color: var(--color-accent);
+}
+
+.manga-details-info p {
+  margin: 8px 0;
+  color: var(--color-gray);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: var(--color-gray);
     background-color: var(--color-bg);
   }
-
   a:hover {
     color: var(--color-accent);
   }
-
   button {
     background-color: var(--color-light);
     color: var(--color-gray);
+  }
+  button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
   }
 }

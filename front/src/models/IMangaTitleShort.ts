@@ -1,4 +1,3 @@
-
 export interface IMangaTitleShort {
   id: number;
   title: string;

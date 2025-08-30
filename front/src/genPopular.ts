@@ -1,51 +1,45 @@
 import type { IMangaTitleShort } from './models/IMangaTitleShort';
 
-const api = 'http://localhost:5000'; // замініть на ваш API
+const api = 'http://localhost:5000';
 
 export async function fetchPopularManga(): Promise<IMangaTitleShort[]> {
-  const response = await fetch(api + '/MangaList/random?count=20');
-  const data = await response.json();
-  return data.$values;
+  const response = await fetch(`${api}/MangaList/random?count=20`);
+  if (!response.ok) throw new Error('Network response was not ok');
+  return (await response.json()) as IMangaTitleShort[];
 }
 
 export async function renderPopularMangaTable() {
-  const mangaList = await fetchPopularManga();
-  const container = document.getElementById('popular-manga');
-  if (!container) return;
+  try {
+    const mangaList = await fetchPopularManga();
+    const container = document.getElementById('popular-manga');
+    if (!container) return;
 
-  // Візьмемо лише перші 9 манг
-  const popular = mangaList.slice(0, 9);
-
-  // Створюємо таблицю 3x3
-  let tableHtml = '<table class="popular-table">';
-  for (let row = 0; row < 3; row++) {
-    tableHtml += '<tr>';
-    for (let col = 0; col < 3; col++) {
-      const idx = row * 3 + col;
-      const manga = popular[idx];
-      if (manga) {
-        tableHtml += `
-          <td>
-            <div class="popular-manga-item" style="display: flex; align-items: center;">
-              <img src="${manga.picture}" alt="${manga.title} cover" style="width:80px; height:auto; margin-right:10px;">
-              <div>
-                <h4 style="margin:3; color: var(--color-gray)">${manga.title}</h4>
-                <p style="margin:3; color: var(--color-gray)">Status: ${manga.status}</p>
+    const popular = mangaList.slice(0, 16);
+    let tableHtml = '<table class="popular-table">';
+    for (let row = 0; row < 4; row++) {
+      tableHtml += '<tr>';
+      for (let col = 0; col < 4; col++) {
+        const idx = row * 4 + col;
+        const manga = popular[idx];
+        tableHtml += manga
+          ? `<td>
+              <div class="popular-manga-item">
+                <div>
+                  <h4 class="truncate-2-lines">${manga.title}</h4>
+                  <p>Статус: ${manga.status}</p>
+                </div>
+                <img class="popular-manga-cover" src="${manga.picture}" alt="${manga.title} cover">
               </div>
-            </div>
-          </td>
-        `;
-      } else {
-        tableHtml += '<td></td>';
+            </td>`
+          : '<td></td>';
       }
+      tableHtml += '</tr>';
     }
-    tableHtml += '</tr>';
+    tableHtml += '</table>';
+    container.innerHTML = tableHtml;
+  } catch (error) {
+    console.error('Failed to fetch popular manga:', error);
   }
-  tableHtml += '</table>';
-
-  container.innerHTML = tableHtml;
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  renderPopularMangaTable();
-});
+window.addEventListener('DOMContentLoaded', renderPopularMangaTable);
