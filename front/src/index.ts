@@ -12,11 +12,11 @@ async function initSwiper() {
     const mangaList: IMangaTitleShort[] = await response.json();
 
     const slidesHtml = mangaList.map(manga => `
-      <div class="swiper-slide swiper-slide-custom">
+      <div class="swiper-slide swiper-slide-custom shadow">
         <div class="swiper-slide-content">
           <div class="aspect-ratio-wrapper">
             <div class="aspect-ratio-inner">
-              <a class="aspect-ratio-link" href="/manga/${manga.id}">
+              <a class="aspect-ratio-link" href="http://localhost:8080/manga.html?id=${manga.id}">
                 <img
                   alt="Poster"
                   loading="lazy"
@@ -29,7 +29,7 @@ async function initSwiper() {
               </a>
             </div>
           </div>
-          <a class="mt-1 truncate swiper-slide-title" href="/manga/${manga.id}">
+          <a class="mt-1 truncate swiper-slide-title" href="http://localhost:8080/manga.html?id=${manga.id}">
             <label class="swiper-slide-label truncate-2-lines">${manga.title}</label>
             <div class="mt-1 cursor-pointer items-center gap-2 swiper-slide-info">
               <label class="swiper-slide-chapters">${manga.chapters ?? '0'} Розділів</label>

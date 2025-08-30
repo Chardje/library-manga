@@ -5,14 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Манга</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="manga.css">
 </head>
 <body>
   <header>
-    <h1 class="window-title" id="manga-title"></h1>
+    <h1 class="window-title">Моя манга</h1>
   </header>
   <main>
-    <div class="manga-details-container" id="manga-details">
-      <!-- Контент манги буде тут -->
+    <div class="line-box shadow" style="max-width:900px;margin:32px auto;">
+      <div class="flex-container" style="align-items:flex-start;gap:32px;">
+        <!-- Ліва колонка: постер -->
+        <div class="manga-poster-block" style="min-width:220px;">
+          <img id="manga-poster" class="manga-poster-img" src="" alt="Постер" style="box-shadow:0 2px 16px rgba(0,0,0,0.08);max-width:220px;">
+          <button class="manga-add-btn" disabled>Додати у список</button>
+        </div>
+        <!-- Центр: інформація -->
+        <div class="manga-info-block manga-details-info" style="flex:1;min-width:300px;">
+          <h2 class="section-title" id="manga-title-main"></h2>
+          <div style="margin-bottom:8px;">
+            <span id="manga-title-year" class="manga-title-year"></span>
+            <span id="manga-title-original" class="manga-title-original"></span>
+          </div>
+          <div id="manga-title" style="display:none"></div>
+          <div id="manga-genres-row" class="manga-genres-row" style="margin-bottom:8px;"></div>
+          <section class="manga-description-block">
+            <div class="manga-description-title">Опис</div>
+            <p id="manga-description" class="manga-description-text"></p>
+          </section>
+          <table id="manga-details-table" class="manga-details-table" style="margin-top:12px;margin-bottom:12px;"></table>
+          <section class="manga-release-block">
+            <div class="manga-release-title">Дата виходу</div>
+            <div id="manga-release-date" class="manga-release-date"></div>
+          </section>
+          <section class="manga-chapters-block">
+            <div class="manga-chapters-title">Список розділів</div>
+            <ul id="manga-chapters-list" class="manga-chapters-list"></ul>
+          </section>
+        </div>
+      </div>
     </div>
   </main>
   <footer>

@@ -7,6 +7,7 @@
   color: var(--color-gray);
   background-color: var(--color-bg);
 
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -55,7 +56,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--color-bg);
   color: var(--color-gray);
 }
 
@@ -115,17 +115,22 @@ h3 {
 .window-title {
   text-align: left;
   margin-left: 50px;
-  
+  text-shadow: #AAAAAA 1px 1px 2px;
+
 }
 
 .section-title {
   text-align: left;
-  margin :10px;
+  margin: 10px;
 }
 
 .line-box {
   background-color: var(--color-light);
 
+}
+
+.shadow {
+  box-shadow: 5px 5px 20px var(--color-gray);
 }
 
 .flex-container {
@@ -146,13 +151,13 @@ h3 {
   max-width: 1280px;
   width: 100%;
   overflow: hidden;
-  min-height: 300px; 
+  min-height: 300px;
 }
 
 .swiper-slide img {
-  width:100%;
-  height:180px;
-  object-fit:cover;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
   border-radius: 8px 8px 0 0;
 }
 
@@ -187,7 +192,10 @@ h3 {
   min-width: 130px;
   overflow: hidden;
   box-sizing: border-box;
+
 }
+
+
 
 .swiper-slide-content {
   width: 100%;
@@ -200,8 +208,10 @@ h3 {
   overflow: hidden;
   padding: 0;
   margin: 0;
-  position: relative; /* Додаємо для абсолютного позиціонування info */
-  padding-bottom: 32px; /* Місце для info внизу */
+  position: relative;
+  /* Додаємо для абсолютного позиціонування info */
+  padding-bottom: 32px;
+  /* Місце для info внизу */
 }
 
 .swiper-slide-title {
@@ -213,7 +223,8 @@ h3 {
   align-items: flex-start;
   flex: 1 1 auto;
   position: relative;
-  padding-bottom: 8px; /* Відступ від info */
+  padding-bottom: 8px;
+  /* Відступ від info */
   z-index: 2;
   margin: 8px 0px 0 8px;
 }
@@ -278,14 +289,15 @@ h3 {
   height: 30px;
 }
 
-.m{
+.m {
   display: inline flex;
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
   background-color: var(--color-accent);
 }
-.popular-manga-item{
+
+.popular-manga-item {
   background-color: var(--color-light);
   display: flex;
   align-items: center;
@@ -296,17 +308,19 @@ h3 {
   margin-bottom: 8px;
   max-width: 300px;
   color: var(--color-bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
-.popular-manga-cover{
+
+.popular-manga-cover {
   border-radius: 6px;
   width: 80px;
   height: 120px;
   object-fit: cover;
   margin-right: 0;
   background: var(--color-bg);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -387,7 +401,10 @@ button:focus-visible {
 
 .aspect-ratio-inner {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -416,7 +433,7 @@ button:focus-visible {
 }
 
 .manga-details-cover img {
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   max-width: 220px;
   height: auto;
 }
@@ -441,13 +458,16 @@ button:focus-visible {
     color: var(--color-gray);
     background-color: var(--color-bg);
   }
+
   a:hover {
     color: var(--color-accent);
   }
+
   button {
     background-color: var(--color-light);
     color: var(--color-gray);
   }
+
   button:hover {
     background-color: var(--color-accent);
     color: var(--color-bg);
