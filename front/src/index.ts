@@ -28,7 +28,13 @@ async function initSwiper() {
     loop: true,
     autoplay: { delay: 2500 },
     modules: [Navigation, Pagination],
-    slidesPerView: 3,
+    slidesPerView: 9,
+    speed: 800,
+    spaceBetween: 10,
+    setWrapperSize: true,
+    a11y: {
+      slideRole: '.swiper-slide'
+    },
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
