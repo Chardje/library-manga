@@ -21,7 +21,7 @@ namespace labrary_manga_api.Models
         [Required]
         [MaxLength(255)]
         [Column("name")]
-        public string? Title { get; set; } // changed to nullable
+        public string? Title { get; set; }
 
         [Column("name_ua")]
         public string? TitleUa { get; set; }
@@ -30,13 +30,18 @@ namespace labrary_manga_api.Models
         public DateTime? ReleaseDate { get; set; }
 
         [Column("status")]
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
         [Column("number_of_chapters")]
-        public int NumberOfChapters { get; set; }
+        public int? NumberOfChapters { get; set; }
 
         [Column("description")]
         public string? Description { get; set; }
+
+        [Column("vidget")]
+        [Required]
+        [MaxLength(10)]
+        public required string Vidget { get; set; }
 
         // Navigation properties
         public ICollection<MangaAuthor> MangaAuthors { get; set; } = new List<MangaAuthor>();

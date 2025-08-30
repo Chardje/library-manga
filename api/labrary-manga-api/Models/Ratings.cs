@@ -9,7 +9,6 @@ namespace labrary_manga_api.Models
     [Table("ratings")]
     public class Ratings
     {
-
         [Key]
         [Column("rating_id")]
         public int RatingId { get; set; }
