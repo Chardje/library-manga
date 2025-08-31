@@ -21,9 +21,30 @@ namespace labrary_manga_api.Controllers
         public async Task<ActionResult<List<Page>>> GetPagesByChapterId(int chapterId)
         {
             var result = await _context
-                .Set<Page>()
-                .Where(p => p.ChapterId == chapterId)
+                .Pages.Where(p => p.ChapterId == chapterId)
+                .OrderBy(p => p.PageNumber)
                 .ToListAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("by-chapter/{mangaId}/{chapterNumber}")]
+        public async Task<ActionResult<List<Page>>> GetPagesByChapter(
+            int mangaId,
+            int chapterNumber
+        )
+        {
+            var chapter = await _context.Chapters.FirstOrDefaultAsync(c =>
+                c.MangaId == mangaId && c.ChapterNumber == chapterNumber
+            );
+
+            if (chapter == null)
+                return NotFound();
+
+            var result = await _context
+                .Pages.Where(p => p.ChapterId == chapter.ChapterId)
+                .OrderBy(p => p.PageNumber)
+                .ToListAsync();
+
             return Ok(result);
         }
     }

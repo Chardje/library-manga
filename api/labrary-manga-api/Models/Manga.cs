@@ -30,7 +30,7 @@ namespace labrary_manga_api.Models
         public DateTime? ReleaseDate { get; set; }
 
         [Column("status")]
-        public string Status { get; set; }
+        public required string Status { get; set; }
 
         [Column("number_of_chapters")]
         public int? NumberOfChapters { get; set; }

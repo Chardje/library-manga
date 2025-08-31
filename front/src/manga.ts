@@ -43,13 +43,14 @@ function renderManga(manga: IManga) {
     ? new Date(manga.releaseDate).toLocaleDateString('uk-UA')
     : '-';
 
-  // Оновлений список розділів
+  // Оновлений список розділів з посиланням на читання
   document.getElementById('manga-chapters-list')!.innerHTML = (manga.chapters ?? [])
     .map(ch => `<li>
       <b>${ch.chapterNumber}. ${ch.title}</b>
       <span style="color:var(--color-gray);font-size:0.95em;">
         (${ch.releaseDate ? new Date(ch.releaseDate).toLocaleDateString('uk-UA') : '-'})
       </span>
+      <a href="read.html?&mangaId=${manga.mangaId}&chapterNumber=${ch.chapterNumber}" style="margin-left:12px;color:var(--color-accent);font-size:0.95em;">Читати</a>
     </li>`).join('');
 }
 

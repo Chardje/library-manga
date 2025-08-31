@@ -1,0 +1,19 @@
+<header style="display:flex;align-items:center;justify-content:space-between;">
+  <div style="display:flex;align-items:center;gap:32px;">
+    <a href="index.html" style="text-decoration:none;">
+      <h1 class="window-title">Мангатека</h1>
+    </a>
+    <a href="catalog.html" class="manga-add-btn" style="text-decoration:none;">Каталог</a>
+  </div>
+  <button id="random-manga-btn" class="manga-add-btn" style="margin-right:24px;">Рандом</button>
+</header>
+<script type="module">
+  document.getElementById('random-manga-btn').onclick = async () => {
+    const res = await fetch('http://localhost:5000/MangaList/random?count=1');
+    if (res.ok) {
+      const [manga] = await res.json();
+      if (manga && manga.id)
+        window.location.href = `manga.html?id=${manga.id}`;
+    }
+  };
+</script>

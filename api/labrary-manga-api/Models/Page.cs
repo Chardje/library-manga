@@ -18,8 +18,5 @@ namespace labrary_manga_api.Models
 
         [Column("image_url")]
         public required string ImageUrl { get; set; }
-
-        // Navigation property
-        public Chapter? Chapter { get; set; }
     }
 }

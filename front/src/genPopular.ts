@@ -23,13 +23,15 @@ export async function renderPopularMangaTable() {
         const manga = popular[idx];
         tableHtml += manga
           ? `<td>
-              <div class="popular-manga-item">
-                <div>
-                  <h4 class="truncate-2-lines">${manga.title}</h4>
-                  <p>Статус: ${manga.status}</p>
+              <a href="manga.html?id=${manga.id}" style="text-decoration:none;">
+                <div class="popular-manga-item">
+                  <div>
+                    <h4 class="truncate-2-lines">${manga.title}</h4>
+                    <p>Статус: ${manga.status}</p>
+                  </div>
+                  <img class="popular-manga-cover" src="${manga.picture}" alt="${manga.title} cover">
                 </div>
-                <img class="popular-manga-cover" src="${manga.picture}" alt="${manga.title} cover">
-              </div>
+              </a>
             </td>`
           : '<td></td>';
       }

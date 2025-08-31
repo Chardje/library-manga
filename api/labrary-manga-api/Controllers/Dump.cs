@@ -69,10 +69,10 @@ namespace labrary_manga_api.Controllers
         // }
 
         // Dump всіх сторінок
-        [HttpGet]
+        [HttpGet("pages")]
         public async Task<ActionResult<List<Page>>> GetAllPages()
         {
-            var result = await _context.Set<Page>().Include(p => p.Chapter).ToListAsync();
+            var result = await _context.Pages.ToListAsync();
             return Ok(result);
         }
     }

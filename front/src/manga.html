@@ -8,9 +8,7 @@
   <link rel="stylesheet" href="manga.css">
 </head>
 <body>
-  <header>
-    <h1 class="window-title">Моя манга</h1>
-  </header>
+  <div id="header"></div>
   <main>
     <div class="line-box shadow" style="max-width:900px;margin:32px auto;">
       <div class="flex-container" style="align-items:flex-start;gap:32px;">
@@ -45,9 +43,11 @@
       </div>
     </div>
   </main>
-  <footer>
-    <p>© 2024 Моя манга</p>
-  </footer>
+  <div id="footer"></div>
   <script type="module" src="./manga.ts"></script>
+  <script>
+    fetch('header.html').then(r => r.text()).then(t => document.getElementById('header').outerHTML = t);
+    fetch('footer.html').then(r => r.text()).then(t => document.getElementById('footer').outerHTML = t);    
+  </script>
 </body>
 </html>

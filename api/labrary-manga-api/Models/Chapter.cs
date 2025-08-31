@@ -25,5 +25,6 @@ namespace labrary_manga_api.Models
         public DateTime? ReleaseDate { get; set; }
 
         public Manga? Manga { get; set; }
+
     }
 }
