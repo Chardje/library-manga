@@ -46,7 +46,14 @@
   <script type="module" src="./index.ts"></script>
   <script type="module" src="./genPopular.ts"></script>
   <script>
-    fetch('header.html').then(r => r.text()).then(t => document.getElementById('header').outerHTML = t);
+    fetch('header.html').then(r => r.text()).then(t => {
+      document.getElementById('header').innerHTML = t;
+      // Динамічно підключаємо header.ts
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = 'header.ts';
+      document.body.appendChild(script);
+    });
     fetch('footer.html').then(r => r.text()).then(t => document.getElementById('footer').outerHTML = t);
   </script>
 </body>

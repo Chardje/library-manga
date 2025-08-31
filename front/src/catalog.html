@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог манги</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="manga.css">
+  <link rel="stylesheet" href="catalog.css">
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <div class="catalog-container">
+      <div id="catalog-results" class="catalog-results"></div>
+      <form id="catalog-search-form" class="catalog-search-panel">
+        <label class="catalog-search-label">Назва</label>
+        <input type="text" name="title" style="width:100%;margin-bottom:8px;">
+        <label class="catalog-search-label">Автор</label>
+        <input type="text" name="author" style="width:100%;margin-bottom:8px;">
+        <label class="catalog-search-label">Дата виходу від</label>
+        <input type="date" name="releaseDateFrom" style="width:100%;margin-bottom:8px;">
+        <label class="catalog-search-label">Дата виходу до</label>
+        <input type="date" name="releaseDateTo" style="width:100%;margin-bottom:8px;">
+        <label class="catalog-search-label">Кількість розділів від</label>
+        <input type="number" name="chaptersFrom" min="1" style="width:100%;margin-bottom:8px;">
+        <label class="catalog-search-label">Кількість розділів до</label>
+        <input type="number" name="chaptersTo" min="1" style="width:100%;margin-bottom:8px;">
+        <label class="catalog-search-label">Статус</label>
+        <select name="status" style="width:100%;margin-bottom:8px;">
+          <option value="">Будь-який</option>
+          <option value="Онгоїнг">Онгоїнг</option>
+          <option value="Завершена">Завершена</option>
+        </select>
+        <label class="catalog-search-label">Жанри</label>
+        <div id="catalog-genres-list" class="catalog-genres-list"></div>
+        <button type="submit" class="catalog-search-btn">Пошук</button>
+      </form>
+    </div>
+  </main>
+  <div id="footer"></div>
+  <script type="module">
+    fetch('header.html').then(async r => {
+      const t = await r.text();
+      document.getElementById('header').innerHTML = t;
+      // Динамічний імпорт після вставки хедера
+      const { mountHeaderReactSearch } = await import('./header.ts');
+      mountHeaderReactSearch();
+    });
+    fetch('footer.html').then(r => r.text()).then(t => {
+      document.getElementById('footer').innerHTML = t;
+    });
+  </script>
+  <script type="module" src="catalog.ts"></script>
+</body>
+</html>
+</html>

@@ -76,10 +76,7 @@ namespace labrary_manga_api.Controllers
 
             int takeCount = count ?? DefaultLimit;
 
-            var result = await query
-                .OrderByDescending(m => m.ReleaseDate)
-                .Take(takeCount)
-                .ToListAsync();
+            var result = await query.OrderBy(m => m.ReleaseDate).Take(takeCount).ToListAsync();
 
             var mapped = result.Select(m => new MangaTitleShort(m)).ToList();
 

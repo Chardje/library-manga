@@ -20,11 +20,6 @@
   --color-gray: #AAAAAA;
 }
 
-.header {
-  margin-bottom: 20px;
-  margin-left: 10%;
-}
-
 .main {
   margin-top: 20px;
   margin-left: 15%;
@@ -57,6 +52,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   color: var(--color-gray);
+  background-color: var(--color-bg);
 }
 
 h1 {
@@ -110,13 +106,6 @@ h3 {
 
 .read-the-docs {
   color: var(--color-gray);
-}
-
-.window-title {
-  text-align: left;
-  margin-left: 50px;
-  text-shadow: #AAAAAA 1px 1px 2px;
-
 }
 
 .section-title {
@@ -397,6 +386,7 @@ button:focus-visible {
   max-height: 180px;
   padding-bottom: 0;
   position: relative;
+  background: var(--color-bg);
 }
 
 .aspect-ratio-inner {

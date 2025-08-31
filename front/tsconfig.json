@@ -11,8 +11,13 @@
     "skipLibCheck": true,
     "outDir": "./dest",
     "rootDir": "./src",
-    "sourceMap": true
+    "sourceMap": true,
+    "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "src/**/*.tsx",
+    "src/**/*.ts"
+  ],
   "exclude": ["node_modules", "dest"]
 }

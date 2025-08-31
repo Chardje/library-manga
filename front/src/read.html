@@ -61,17 +61,23 @@
   </main>
   <div id="footer"></div>
   <script type="module" src="./read.ts"></script>
-  <script>
-    fetch('header.html').then(r => r.text()).then(t => document.getElementById('header').outerHTML = t);
+  <script type="module">
+    fetch('header.html').then(async r => {
+      const t = await r.text();
+      document.getElementById('header').innerHTML = t;
+      // Динамічний імпорт після вставки хедера
+      const { mountHeaderReactSearch } = await import('./header.ts');
+      mountHeaderReactSearch();
+    });
     fetch('footer.html').then(r => r.text()).then(t => document.getElementById('footer').outerHTML = t);
-    document.getElementById('random-manga-btn').onclick = async () => {
+    document.getElementById('random-manga-btn')?.addEventListener('click', async () => {
       const res = await fetch('http://localhost:5000/MangaList/random?count=1');
       if (res.ok) {
         const [manga] = await res.json();
         if (manga && manga.id)
           window.location.href = `manga.html?id=${manga.id}`;
       }
-    };
+    });
   </script>
 </body>
 </html>
