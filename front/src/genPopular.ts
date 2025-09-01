@@ -1,4 +1,7 @@
 import type { IMangaTitleShort } from './models/IMangaTitleShort';
+import * as React from "react";
+import { createRoot } from "react-dom/client";
+import { MangaPopover } from "./react/MangaPopover";
 
 const api = 'http://localhost:5000';
 
@@ -23,15 +26,7 @@ export async function renderPopularMangaTable() {
         const manga = popular[idx];
         tableHtml += manga
           ? `<td>
-              <a href="manga.html?id=${manga.id}" style="text-decoration:none;">
-                <div class="popular-manga-item">
-                  <div>
-                    <h4 class="truncate-2-lines">${manga.title}</h4>
-                    <p>Статус: ${manga.status}</p>
-                  </div>
-                  <img class="popular-manga-cover" src="${manga.picture}" alt="${manga.title} cover">
-                </div>
-              </a>
+              <div id="popular-manga-popover-root-${idx}"></div>
             </td>`
           : '<td></td>';
       }
@@ -39,6 +34,44 @@ export async function renderPopularMangaTable() {
     }
     tableHtml += '</table>';
     container.innerHTML = tableHtml;
+
+    // Монтуємо MangaPopover для кожної популярної манги (тільки коротка інфа)
+    popular.forEach((manga, idx) => {
+      const rootElem = document.getElementById(`popular-manga-popover-root-${idx}`);
+      if (rootElem) {
+        createRoot(rootElem).render(
+          React.createElement(MangaPopover, {
+            manga,
+            side: "right",
+            children: React.createElement(
+              "a",
+              {
+                href: `manga.html?id=${manga.id}`,
+                style: { textDecoration: "none", display: "block" }
+              },
+              React.createElement(
+                "div",
+                {
+                  className: "popular-manga-item",
+                  style: { cursor: "pointer" }
+                },
+                React.createElement(
+                  "div",
+                  null,
+                  React.createElement("h4", { className: "truncate-2-lines" }, manga.title),
+                  React.createElement("p", null, `Статус: ${manga.status}`)
+                ),
+                React.createElement("img", {
+                  className: "popular-manga-cover",
+                  src: manga.picture,
+                  alt: `${manga.title} cover`
+                })
+              )
+            )
+          })
+        );
+      }
+    });
   } catch (error) {
     console.error('Failed to fetch popular manga:', error);
   }

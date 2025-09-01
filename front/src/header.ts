@@ -1,6 +1,7 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
-import HeaderSearchDialog from "./HeaderSearchDialog";
+// Виправлений шлях імпорту
+import HeaderSearchDialog from "./react/HeaderSearchDialog";
 
 
 export function mountHeaderReactSearch() {
