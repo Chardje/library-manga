@@ -54,4 +54,40 @@ The application consists of:
 
 This structure allows students to learn and practice real-world web development, API design, database integration, and containerization.
 
+---
+
+## Example Screenshots
+
+Below are some example screenshots of the Library Manga site:
+
+### Main Page
+
+![Main Page](.assets/ss_index.png)
+
+### Catalog
+
+![Catalog](.assets/ss_katalog.png)
+
+### Manga Details
+
+![Manga Details](.assets/ss_manga.png)
+
+### Reader
+
+![Reader](.assets/ss_read.png)
+
+### Search
+
+![Search](.assets/ss_search.png)
+
+---
+
+## Demo Video
+
+Watch a short demo of the application in action:
+
+<video src=".assets/ss_video.mp4" controls width="700">
+  Your browser does not support the video tag.
+</video>
+
 
